@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Upload, X, Loader2, Image as ImageIcon } from "lucide-react";
 import { Button } from "./button";
 import { toast } from "sonner";
@@ -25,6 +25,15 @@ export function ImageUpload({
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [authToken, setAuthToken] = useState("");
+
+  useEffect(() => {
+    const storage = localStorage.getItem("auth-storage");
+    if (storage) {
+      const token = JSON.parse(storage).state.token;
+      setAuthToken(token);
+    }
+  }, []);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -53,7 +62,7 @@ export function ImageUpload({
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth-storage") ? JSON.parse(localStorage.getItem("auth-storage")!).state.token : ""}`,
+          Authorization: `Bearer ${authToken}`,
         },
       });
 
@@ -169,6 +178,15 @@ export function MultipleImageUpload({
 }: MultipleImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [authToken, setAuthToken] = useState("");
+
+  useEffect(() => {
+    const storage = localStorage.getItem("auth-storage");
+    if (storage) {
+      const token = JSON.parse(storage).state.token;
+      setAuthToken(token);
+    }
+  }, []);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -204,7 +222,7 @@ export function MultipleImageUpload({
           method: "POST",
           body: formData,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth-storage") ? JSON.parse(localStorage.getItem("auth-storage")!).state.token : ""}`,
+            Authorization: `Bearer ${authToken}`,
           },
         });
 
@@ -300,4 +318,3 @@ export function MultipleImageUpload({
     </div>
   );
 }
-

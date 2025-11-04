@@ -67,18 +67,7 @@ export async function deleteFromCloudinary(
   }
 }
 
-/**
- * Convert file to base64 for Cloudinary upload
- * @param file - File object
- */
-export async function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-}
+
 
 export default cloudinary;
 

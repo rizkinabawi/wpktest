@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { authenticate, createErrorResponse, createSuccessResponse } from '@/lib/middleware/auth';
-import { uploadToCloudinary, fileToBase64 } from '@/lib/cloudinary';
+import { uploadToCloudinary } from '@/lib/cloudinary';
 
 // POST /api/upload/image - Upload image to Cloudinary (admin only)
 export async function POST(request: NextRequest) {
