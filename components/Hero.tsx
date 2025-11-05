@@ -14,6 +14,8 @@ export function Hero() {
   );
 
   const heroContent = heroSection?.content || {};
+  // console.log(heroContent)
+
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);

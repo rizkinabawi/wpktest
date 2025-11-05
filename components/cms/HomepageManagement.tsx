@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +18,6 @@ import {
 import { useHomepageSections, useUpdateAllHomepageSections } from "@/lib/hooks/useApi";
 import { toast } from "sonner";
 import { SingleImageUpload } from "@/components/ui/image-upload";
-import Image from "next/image";
 
 interface Section {
   _id: string;
@@ -37,7 +35,6 @@ export default function HomepageManagement() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
 
-  // Initialize sections when data loads
   useEffect(() => {
     if (data?.items) {
       setSections(data.items);
@@ -60,10 +57,7 @@ export default function HomepageManagement() {
       newSections[index],
       newSections[index - 1],
     ];
-    // Update order
-    newSections.forEach((s, i) => {
-      s.order = i;
-    });
+    newSections.forEach((s, i) => (s.order = i));
     setSections(newSections);
     setHasChanges(true);
   };
@@ -75,10 +69,7 @@ export default function HomepageManagement() {
       newSections[index + 1],
       newSections[index],
     ];
-    // Update order
-    newSections.forEach((s, i) => {
-      s.order = i;
-    });
+    newSections.forEach((s, i) => (s.order = i));
     setSections(newSections);
     setHasChanges(true);
   };
@@ -209,143 +200,242 @@ export default function HomepageManagement() {
               <CardContent className="pt-0">
                 <div className="space-y-4 border-t border-slate-700 pt-4">
                   {/* Hero Section */}
-                  {section.sectionId === "hero" && (
+                  {/* {section.sectionId === "hero" && (
                     <>
-                      <div>
-                        <label className="block text-slate-300 mb-2">見出し</label>
-                        <Input
-                          value={section.content?.heading || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "heading", e.target.value)
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">説明</label>
-                        <Textarea
-                          value={section.content?.description || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "description", e.target.value)
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                          rows={3}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">背景画像</label>
-                        <SingleImageUpload
-                          value={section.content?.backgroundImage || ""}
-                          onChange={(url) =>
-                            handleContentChange(section.sectionId, "backgroundImage", url)
-                          }
-                          folder="homepage/hero"
-                        />
-                      </div>
+                      <label className="block text-slate-300 mb-2">見出し</label>
+                      <Input
+                        value={section.content?.heading || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "heading", e.target.value)
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">説明</label>
+                      <Textarea
+                        value={section.content?.description || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "description", e.target.value)
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">背景画像</label>
+                      <SingleImageUpload
+                        value={section.content?.backgroundImage || ""}
+                        onChange={(url) =>
+                          handleContentChange(section.sectionId, "backgroundImage", url)
+                        }
+                        folder="homepage/hero"
+                      />
                     </>
-                  )}
+                  )} */}
+
+                  {/* Hero Section */}
+{section.sectionId === "hero" && (
+  <>
+    <label className="block text-slate-300 mb-2">見出し（Heading）</label>
+    <Input
+      value={section.content?.heading || ""}
+      onChange={(e) =>
+        handleContentChange(section.sectionId, "heading", e.target.value)
+      }
+      className="bg-slate-900 border-slate-600 text-white"
+    />
+
+    <label className="block text-slate-300 mb-2">サブ見出し（Subheading）</label>
+    <Input
+      value={section.content?.subheading || ""}
+      onChange={(e) =>
+        handleContentChange(section.sectionId, "subheading", e.target.value)
+      }
+      className="bg-slate-900 border-slate-600 text-white"
+    />
+
+    <label className="block text-slate-300 mb-2">説明（Description）</label>
+    <Textarea
+      value={section.content?.description || ""}
+      onChange={(e) =>
+        handleContentChange(section.sectionId, "description", e.target.value)
+      }
+      className="bg-slate-900 border-slate-600 text-white"
+      rows={3}
+    />
+
+    <label className="block text-slate-300 mb-2">背景画像（Background Image）</label>
+    <SingleImageUpload
+      value={section.content?.image || ""}
+      onChange={(url) =>
+        handleContentChange(section.sectionId, "image", url)
+      }
+      folder="homepage/hero"
+    />
+
+    <label className="block text-slate-300 mb-2">バッジテキスト（Badge Text）</label>
+    <Input
+      value={section.content?.badge?.text || ""}
+      onChange={(e) =>
+        handleContentChange(section.sectionId, "badge", {
+          ...section.content?.badge,
+          text: e.target.value,
+        })
+      }
+      className="bg-slate-900 border-slate-600 text-white"
+    />
+
+    <div className="space-y-2">
+      <label className="block text-slate-300 mb-2">ボタン（Buttons）</label>
+      {(section.content?.buttons || []).map((btn: any, i: number) => (
+        <div key={i} className="flex gap-2">
+          <Input
+            placeholder="Button text"
+            value={btn.text}
+            onChange={(e) => {
+              const newBtns = [...(section.content?.buttons || [])];
+              newBtns[i].text = e.target.value;
+              handleContentChange(section.sectionId, "buttons", newBtns);
+            }}
+            className="bg-slate-900 border-slate-600 text-white"
+          />
+          <Input
+            placeholder="#link"
+            value={btn.link}
+            onChange={(e) => {
+              const newBtns = [...(section.content?.buttons || [])];
+              newBtns[i].link = e.target.value;
+              handleContentChange(section.sectionId, "buttons", newBtns);
+            }}
+            className="bg-slate-900 border-slate-600 text-white"
+          />
+        </div>
+      ))}
+
+      <Button
+        variant="outline"
+        onClick={() =>
+          handleContentChange(section.sectionId, "buttons", [
+            ...(section.content?.buttons || []),
+            { text: "新しいボタン", link: "#", variant: "primary" },
+          ])
+        }
+      >
+        ボタンを追加
+      </Button>
+    </div>
+  </>
+)}
 
                   {/* About Section */}
                   {section.sectionId === "about" && (
                     <>
-                      <div>
-                        <label className="block text-slate-300 mb-2">説明</label>
-                        <Textarea
-                          value={section.content?.description || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "description", e.target.value)
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                          rows={4}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">画像</label>
-                        <SingleImageUpload
-                          value={section.content?.image || ""}
-                          onChange={(url) =>
-                            handleContentChange(section.sectionId, "image", url)
-                          }
-                          folder="homepage/about"
-                        />
-                      </div>
+                      <label className="block text-slate-300 mb-2">説明</label>
+                      <Textarea
+                        value={section.content?.description || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "description", e.target.value)
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">画像</label>
+                      <SingleImageUpload
+                        value={section.content?.image || ""}
+                        onChange={(url) =>
+                          handleContentChange(section.sectionId, "image", url)
+                        }
+                        folder="homepage/about"
+                      />
+                    </>
+                  )}
+
+                  {/* Technology Section */}
+                  {section.sectionId === "technology" && (
+                    <>
+                      <label className="block text-slate-300 mb-2">見出し</label>
+                      <Input
+                        value={section.content?.heading || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "heading", e.target.value)
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">説明</label>
+                      <Textarea
+                        value={section.content?.description || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "description", e.target.value)
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                        rows={4}
+                      />
+                      <label className="block text-slate-300 mb-2">背景画像</label>
+                      <SingleImageUpload
+                        value={section.content?.image || ""}
+                        onChange={(url) =>
+                          handleContentChange(section.sectionId, "image", url)
+                        }
+                        folder="homepage/technology"
+                      />
                     </>
                   )}
 
                   {/* Company Section */}
                   {section.sectionId === "company" && (
                     <>
-                      <div>
-                        <label className="block text-slate-300 mb-2">会社名</label>
-                        <Input
-                          value={section.content?.companyInfo?.name || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "companyInfo", {
-                              ...section.content?.companyInfo,
-                              name: e.target.value,
-                            })
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">住所</label>
-                        <Input
-                          value={section.content?.companyInfo?.address || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "companyInfo", {
-                              ...section.content?.companyInfo,
-                              address: e.target.value,
-                            })
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">電話番号</label>
-                        <Input
-                          value={section.content?.companyInfo?.phone || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "companyInfo", {
-                              ...section.content?.companyInfo,
-                              phone: e.target.value,
-                            })
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">メール</label>
-                        <Input
-                          value={section.content?.companyInfo?.email || ""}
-                          onChange={(e) =>
-                            handleContentChange(section.sectionId, "companyInfo", {
-                              ...section.content?.companyInfo,
-                              email: e.target.value,
-                            })
-                          }
-                          className="bg-slate-900 border-slate-600 text-white"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-300 mb-2">会社ロゴ</label>
-                        <SingleImageUpload
-                          value={section.content?.companyInfo?.logo || ""}
-                          onChange={(url) =>
-                            handleContentChange(section.sectionId, "companyInfo", {
-                              ...section.content?.companyInfo,
-                              logo: url,
-                            })
-                          }
-                          folder="homepage/company"
-                        />
-                      </div>
+                      <label className="block text-slate-300 mb-2">会社名</label>
+                      <Input
+                        value={section.content?.companyInfo?.name || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            name: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">住所</label>
+                      <Input
+                        value={section.content?.companyInfo?.address || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            address: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">電話番号</label>
+                      <Input
+                        value={section.content?.companyInfo?.phone || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            phone: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">メール</label>
+                      <Input
+                        value={section.content?.companyInfo?.email || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            email: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
+                      <label className="block text-slate-300 mb-2">会社ロゴ</label>
+                      <SingleImageUpload
+                        value={section.content?.companyInfo?.logo || ""}
+                        onChange={(url) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            logo: url,
+                          })
+                        }
+                        folder="homepage/company"
+                      />
                     </>
                   )}
-
-                  <p className="text-slate-500 text-sm">
-                    ※ その他のコンテンツは各管理画面で編集してください
-                  </p>
                 </div>
               </CardContent>
             )}
@@ -355,4 +445,3 @@ export default function HomepageManagement() {
     </div>
   );
 }
-

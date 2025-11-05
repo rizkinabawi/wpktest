@@ -318,3 +318,5 @@ export function MultipleImageUpload({
     </div>
   );
 }
+export { ImageUpload as SingleImageUpload };
+

@@ -132,9 +132,9 @@ export default function CMSDashboard({ navigate }: CMSDashboardProps) {
                     </div>
                   ))
                 ) : recentInquiries.length > 0 ? (
-                  recentInquiries.map((inquiry: any) => (
+                  recentInquiries.map((inquiry: any,index: number) => (
                     <div
-                      key={inquiry._id}
+                      key={inquiry._id || index}
                       className="flex items-start justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
                       onClick={() => navigate("/cms/inquiries")}
                     >
@@ -198,9 +198,9 @@ export default function CMSDashboard({ navigate }: CMSDashboardProps) {
                     </div>
                   ))
                 ) : recentNews.length > 0 ? (
-                  recentNews.map((news: any) => (
+                  recentNews.map((news: any ,index: number) => (
                     <div
-                      key={news._id}
+                      key={news._id || index}
                       className="p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
                       onClick={() => navigate("/cms/news")}
                     >

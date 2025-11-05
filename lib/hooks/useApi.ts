@@ -455,7 +455,7 @@ export function useHomepageSections(params?: { visible?: boolean }) {
     queryKey: ['homepage-sections', params],
     queryFn: async () => {
       const queryParams = params?.visible ? { visible: 'true' } : {}
-      const response = await apiClient.get('/api/homepage-sections', queryParams)
+      const response = await apiClient.get('/homepage-sections', queryParams)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to fetch homepage sections')
       }
@@ -468,7 +468,7 @@ export function useHomepageSectionById(sectionId: string) {
   return useQuery({
     queryKey: ['homepage-section', sectionId],
     queryFn: async () => {
-      const response = await apiClient.get(`/api/homepage-sections/${sectionId}`)
+      const response = await apiClient.get(`/homepage-sections/${sectionId}`)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to fetch homepage section')
       }
@@ -483,7 +483,7 @@ export function useUpdateHomepageSection() {
 
   return useMutation({
     mutationFn: async ({ sectionId, data }: { sectionId: string; data: any }) => {
-      const response = await apiClient.put(`/api/homepage-sections/${sectionId}`, data)
+      const response = await apiClient.put(`/homepage-sections/${sectionId}`, data)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to update homepage section')
       }
@@ -505,7 +505,7 @@ export function useUpdateAllHomepageSections() {
 
   return useMutation({
     mutationFn: async (data: { sections: any[] }) => {
-      const response = await apiClient.put('/api/homepage-sections', data)
+      const response = await apiClient.put('/homepage-sections', data)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to update homepage sections')
       }
@@ -526,7 +526,7 @@ export function useEquipment(params?: { category?: string; status?: string; limi
   return useQuery({
     queryKey: ['equipment', params],
     queryFn: async () => {
-      const response = await apiClient.get('/api/equipment', params)
+      const response = await apiClient.get('/equipment', params)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to fetch equipment')
       }
@@ -539,7 +539,7 @@ export function useCreateEquipment() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiClient.post('/api/equipment', data)
+      const response = await apiClient.post('/equipment', data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to create equipment')
       return response.data
     },
@@ -555,7 +555,7 @@ export function useUpdateEquipment() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const response = await apiClient.put(`/api/equipment/${id}`, data)
+      const response = await apiClient.put(`/equipment/${id}`, data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to update equipment')
       return response.data
     },
@@ -571,7 +571,7 @@ export function useDeleteEquipment() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const response = await apiClient.delete(`/api/equipment/${id}`)
+      const response = await apiClient.delete(`/equipment/${id}`)
       if (!response.success) throw new Error(response.error?.message || 'Failed to delete equipment')
       return response.data
     },
@@ -588,7 +588,7 @@ export function useSampleProducts(params?: { category?: string; status?: string;
   return useQuery({
     queryKey: ['sample-products', params],
     queryFn: async () => {
-      const response = await apiClient.get('/api/sample-products', params)
+      const response = await apiClient.get('/sample-products', params)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to fetch sample products')
       }
@@ -601,7 +601,7 @@ export function useCreateSampleProduct() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiClient.post('/api/sample-products', data)
+      const response = await apiClient.post('/sample-products', data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to create sample product')
       return response.data
     },
@@ -617,7 +617,7 @@ export function useUpdateSampleProduct() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const response = await apiClient.put(`/api/sample-products/${id}`, data)
+      const response = await apiClient.put(`/sample-products/${id}`, data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to update sample product')
       return response.data
     },
@@ -633,7 +633,7 @@ export function useDeleteSampleProduct() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const response = await apiClient.delete(`/api/sample-products/${id}`)
+      const response = await apiClient.delete(`/sample-products/${id}`)
       if (!response.success) throw new Error(response.error?.message || 'Failed to delete sample product')
       return response.data
     },
@@ -650,7 +650,7 @@ export function useEvents(params?: { status?: string; isPublic?: boolean; limit?
   return useQuery({
     queryKey: ['events', params],
     queryFn: async () => {
-      const response = await apiClient.get('/api/events', params)
+      const response = await apiClient.get('/events', params)
       if (!response.success) {
         throw new Error(response.error?.message || 'Failed to fetch events')
       }
@@ -663,7 +663,7 @@ export function useCreateEvent() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiClient.post('/api/events', data)
+      const response = await apiClient.post('/events', data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to create event')
       return response.data
     },
@@ -679,7 +679,7 @@ export function useUpdateEvent() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const response = await apiClient.put(`/api/events/${id}`, data)
+      const response = await apiClient.put(`/events/${id}`, data)
       if (!response.success) throw new Error(response.error?.message || 'Failed to update event')
       return response.data
     },
@@ -695,7 +695,7 @@ export function useDeleteEvent() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const response = await apiClient.delete(`/api/events/${id}`)
+      const response = await apiClient.delete(`/events/${id}`)
       if (!response.success) throw new Error(response.error?.message || 'Failed to delete event')
       return response.data
     },

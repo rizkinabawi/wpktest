@@ -70,7 +70,38 @@ class ApiClient {
     }
   }
 
-  // Auth endpoints
+  async get<T = any>(endpoint: string, params?: Record<string, any>) {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      for (const key in params) {
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
+          queryParams.append(key, params[key]);
+        }
+      }
+    }
+    const query = queryParams.toString();
+    return this.request<T>(`${endpoint}${query ? `?${query}` : ''}`);
+  }
+
+  async post<T = any>(endpoint: string, data: any) {
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async put<T = any>(endpoint: string, data: any) {
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async delete<T = any>(endpoint: string) {
+    return this.request<T>(endpoint, {
+      method: 'DELETE',
+    });
+  }
   async login(email: string, password: string) {
     const response = await this.request('/auth/login', {
       method: 'POST',
@@ -281,7 +312,24 @@ class ApiClient {
     });
   }
 
-  // Settings endpoints
+  // Homepage Sections endpoints
+  async getHomepageSections(params?: { visible?: boolean }) {
+    return this.get('/homepage-sections', params);
+  }
+
+  async getHomepageSectionById(sectionId: string) {
+    return this.get(`/homepage-sections/${sectionId}`);
+  }
+
+  async updateHomepageSection(sectionId: string, data: any) {
+    return this.put(`/homepage-sections/${sectionId}`, data);
+  }
+
+  async updateAllHomepageSections(data: { sections: any[] }) {
+    return this.put('/homepage-sections', data);
+  }
+
+  // Equipment endpoints
   async getSettings() {
     return this.request('/settings');
   }
@@ -300,7 +348,24 @@ class ApiClient {
     });
   }
 
-  // Upload endpoint
+  // Equipment endpoints
+  async getEquipment(params?: { category?: string; status?: string; limit?: number }) {
+    return this.get('/equipment', params);
+  }
+
+  async createEquipment(data: any) {
+    return this.post('/equipment', data);
+  }
+
+  async updateEquipment(id: string, data: any) {
+    return this.put(`/equipment/${id}`, data);
+  }
+
+  async deleteEquipment(id: string) {
+    return this.delete(`/equipment/${id}`);
+  }
+
+  // Sample Products endpoints
   async uploadFile(file: File, type: 'image' | 'resume' | 'document' = 'image') {
     const formData = new FormData();
     formData.append('file', file);

@@ -1,15 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, Roboto_Mono } from "next/font/google"
 import "./globals.css"
 import { QueryProvider } from "@/lib/providers/QueryProvider"
 
-const geistSans = Geist({
+// Ganti GeistSans & GeistMono dengan Inter & Roboto Mono
+const geistSans = Inter({
   subsets: ["latin"],
   variable: "--font-geist-sans",
 })
 
-const geistMono = Geist_Mono({
+const geistMono = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
 })
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "有限会社鷲津メッキ工業所",
   description: "Modern Website for Washizu Plating Industry",
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
