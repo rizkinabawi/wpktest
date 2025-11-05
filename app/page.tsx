@@ -13,6 +13,7 @@ import { Footer } from "@/components/Footer"
 import { Toaster } from "@/components/ui/sonner"
 import { useHomepageSections } from "@/lib/hooks/useApi"
 import { Loader2 } from "lucide-react"
+import SampleProduct from "@/lib/models/SampleProduct"
 
 export default function Page() {
   const { data, isLoading } = useHomepageSections()
@@ -31,6 +32,7 @@ export default function Page() {
     about: <About />,
     services: <Services />,
     technology: <Technology />,
+    SampleProduct : <SampleProduct />,
     news: <News />,
     company: <Company />,
     recruit: <Recruit />,

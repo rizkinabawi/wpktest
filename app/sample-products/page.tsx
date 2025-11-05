@@ -1,12 +1,12 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import {Navigation} from "@/components//Navigation";
+import {Footer }from "@/components/Footer";
 import { Package } from "lucide-react";
 import Image from "next/image";
 
 async function getSampleProducts() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/sample-products?status=公開`, {
+    const res = await fetch(`${baseUrl}/sample-products?status=公開`, {
       cache: 'no-store',
     });
     if (!res.ok) return { items: [] };

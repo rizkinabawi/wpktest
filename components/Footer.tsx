@@ -2,7 +2,7 @@
 
 import { Phone, Mail, MapPin } from "lucide-react";
 
-export function Footer() {
+export  function Footer() {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
