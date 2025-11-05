@@ -32,7 +32,6 @@ export default function Page() {
     about: <About />,
     services: <Services />,
     technology: <Technology />,
-    SampleProduct : <SampleProduct />,
     news: <News />,
     company: <Company />,
     recruit: <Recruit />,

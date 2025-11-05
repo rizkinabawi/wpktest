@@ -4,27 +4,21 @@ import { useState, useEffect } from "react"
 import { Menu, X, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
+import { useNavigateToSection } from "@/hooks/useNavigateToSection"
+import { useRouter } from "next/navigation"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isNewsHover, setIsNewsHover] = useState(false)
+  const { navigateToSection } = useNavigateToSection()
+  const router = useRouter()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setIsMobileMenuOpen(false)
-    }
-  }
 
   const navLinks = [
     { label: "TOP", id: "hero", labelJa: "トップ" },
@@ -33,6 +27,22 @@ export function Navigation() {
     { label: "RECRUIT", id: "recruit", labelJa: "採用情報" },
     { label: "INQUIRY", id: "contact", labelJa: "お問い合わせ" },
   ]
+
+  const newsLinks = [
+    { label: "NEWS", href: "/news", labelJa: "ニュース" },
+    { label: "EVENTS", href: "/events", labelJa: "イベント" },
+    { label: "PRODUCTS", href: "/products", labelJa: "製品" },
+  ]
+
+  const scrollOrPush = (id?: string, href?: string) => {
+    if (href) {
+      router.push(href)
+    } else if (id) {
+      navigateToSection("/", id)
+    }
+    setIsMobileMenuOpen(false)
+    setIsNewsHover(false)
+  }
 
   return (
     <motion.nav
@@ -48,29 +58,27 @@ export function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <motion.button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => navigateToSection("/", "hero")}
             className="flex items-center gap-3 group"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="flex items-center">
-              <div className="text-left">
-                <div className="text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  有限会社
-                </div>
-                <div className="text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  鷲津メッキ工業所
-                </div>
+            <div className="flex items-center text-left">
+              <div className="text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                有限会社
+              </div>
+              <div className="text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                鷲津メッキ工業所
               </div>
             </div>
           </motion.button>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
               <button
                 key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                onClick={() => scrollOrPush(link.id)}
                 className="px-4 py-2 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group"
               >
                 <div className="text-center">
@@ -80,6 +88,44 @@ export function Navigation() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full" />
               </button>
             ))}
+
+            {/* News with hover dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsNewsHover(true)}
+              onMouseLeave={() => setIsNewsHover(false)}
+            >
+              <button className="px-4 py-2 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
+                <div className="text-center">
+                  <div className="text-xs opacity-70">{newsLinks[0].labelJa}</div>
+                  <div>{newsLinks[0].label}</div>
+                </div>
+              </button>
+
+              <AnimatePresence>
+                {isNewsHover && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute mt-2 w-36 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden z-50"
+                  >
+                    {newsLinks.map((item) => (
+                      <button
+                        key={item.label}
+                        onClick={() => scrollOrPush(undefined, item.href)}
+                        className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300"
+                      >
+                        <div className="text-xs opacity-70">{item.labelJa}</div>
+                        <div>{item.label}</div>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Phone */}
             <a
               href="tel:+81-XXX-XXXX-XXXX"
               className="ml-4 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
@@ -89,7 +135,7 @@ export function Navigation() {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu */}
           <Button
             variant="ghost"
             size="icon"
@@ -114,7 +160,7 @@ export function Navigation() {
               {navLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => scrollToSection(link.id)}
+                  onClick={() => scrollOrPush(link.id)}
                   className="block w-full text-left px-4 py-3 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-colors"
                 >
                   <div>
@@ -123,13 +169,19 @@ export function Navigation() {
                   </div>
                 </button>
               ))}
-              <a
-                href="tel:+81-XXX-XXXX-XXXX"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-              >
-                <Phone className="h-4 w-4" />
-                <span>お電話でのお問い合わせ</span>
-              </a>
+
+              {newsLinks.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => scrollOrPush(undefined, item.href)}
+                  className="block w-full text-left px-4 py-3 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-colors"
+                >
+                  <div>
+                    <div className="text-xs opacity-70">{item.labelJa}</div>
+                    <div>{item.label}</div>
+                  </div>
+                </button>
+              ))}
             </div>
           </motion.div>
         )}

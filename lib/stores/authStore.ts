@@ -34,12 +34,17 @@ export const useAuthStore = create<AuthState>()(
           const response = await apiClient.login(email, password)
           
           if (response.success && response.data) {
+            const { user, token } = response.data
             set({
-              user: response.data.user,
-              token: response.data.token,
+              user,
+              token,
               isAuthenticated: true,
               isLoading: false,
             })
+            // simpan ke localStorage secara eksplisit juga
+            localStorage.setItem('auth-user', JSON.stringify(user))
+            localStorage.setItem('auth-token', token)
+            localStorage.setItem('auth-isAuthenticated', 'true')
             return { success: true }
           } else {
             set({ isLoading: false })
@@ -64,9 +69,27 @@ export const useAuthStore = create<AuthState>()(
           token: null,
           isAuthenticated: false,
         })
+        // hapus dari localStorage juga
+        localStorage.removeItem('auth-user')
+        localStorage.removeItem('auth-token')
+        localStorage.removeItem('auth-isAuthenticated')
       },
 
       checkAuth: async () => {
+        // cek dari localStorage dulu
+        const localUser = localStorage.getItem('auth-user')
+        const localToken = localStorage.getItem('auth-token')
+        const localAuth = localStorage.getItem('auth-isAuthenticated') === 'true'
+
+        if (localUser && localToken && localAuth) {
+          set({
+            user: JSON.parse(localUser),
+            token: localToken,
+            isAuthenticated: true,
+          })
+          return
+        }
+
         const token = get().token
         if (!token) {
           set({ isAuthenticated: false, user: null })
@@ -98,6 +121,11 @@ export const useAuthStore = create<AuthState>()(
 
       setUser: (user: User | null) => {
         set({ user })
+        if (user) {
+          localStorage.setItem('auth-user', JSON.stringify(user))
+        } else {
+          localStorage.removeItem('auth-user')
+        }
       },
     }),
     {
@@ -110,4 +138,3 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 )
-

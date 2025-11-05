@@ -1,5 +1,5 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import {Navigation} from "@/components/Navigation";
+import {Footer} from "@/components/Footer";
 import { Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
