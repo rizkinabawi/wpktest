@@ -5,10 +5,16 @@ import { Calendar, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { useNews } from "@/lib/hooks/useApi";
+import { useNavigation } from "react-day-picker";
+import { useRouter } from 'next/navigation';
 
 export function News() {
   const { data, isLoading } = useNews({ limit: 4, status: '公開' });
   const news = data?.items || [];
+  const Router = useRouter();
+
+
+
 
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8" id="news">
@@ -73,7 +79,7 @@ export function News() {
                       {item.description}
                     </p>
                     <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 group-hover:gap-3 transition-all">
-                      <span>詳しく見る</span>
+                      <span onClick={()=>Router.push('/details/news/'+item.id)}>詳しく見る</span>
                       <ArrowRight className="h-4 w-4" />
                     </div>
                   </CardContent>

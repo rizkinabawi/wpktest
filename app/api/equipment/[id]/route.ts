@@ -5,10 +5,14 @@ import { authenticate, createErrorResponse, createSuccessResponse } from '@/lib/
 
 // GET /api/equipment/[id]
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  
   try {
     await dbConnect();
     const { id } = await params;
-    const equipment = await Equipment.findById(id);
+    if (!Equipment || !Equipment.findOne) {
+      throw new Error("Equipment model not initialized correctly");
+    }
+    const equipment = await Equipment.findById(id).lean();
 
     if (!equipment) {
       return createErrorResponse('NOT_FOUND', 'Equipment not found', 404);

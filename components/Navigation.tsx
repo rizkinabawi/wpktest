@@ -29,16 +29,19 @@ export function Navigation() {
   ]
 
   const newsLinks = [
-    { label: "NEWS", href: "/news", labelJa: "ニュース" },
+    { label: "NEWS", id : "news", labelJa: "ニュース" },
     { label: "EVENTS", href: "/events", labelJa: "イベント" },
     { label: "PRODUCTS", href: "/products", labelJa: "製品" },
   ]
 
   const scrollOrPush = (id?: string, href?: string) => {
-    if (href) {
+    if (href && id !== "news") {
       router.push(href)
     } else if (id) {
       navigateToSection("/", id)
+    }
+    else {
+    navigateToSection("/", "news")
     }
     setIsMobileMenuOpen(false)
     setIsNewsHover(false)

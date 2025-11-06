@@ -23,6 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return createSuccessResponse({
       id: application._id,
+      // @ts-ignore    
       date: application.date,
       position: application.position,
       name: application.name,

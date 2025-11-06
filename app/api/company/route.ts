@@ -1,22 +1,24 @@
+// app/api/company/route.ts
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
-import Company from "@/lib/models/Company";
+import CompanyModel from "@/lib/models/Company";
+import mongoose from "mongoose";
 
 export async function GET() {
   try {
     await connectToDatabase();
-    const company = await Company.findOne();
+
+    // Type casting biar TS gak complain
+    const Company = CompanyModel as mongoose.Model<any>;
+
+    const company = await Company.findOne().lean();
 
     if (!company) {
       return NextResponse.json({ message: "No company found" }, { status: 404 });
     }
 
-    return NextResponse.json(company);
-  } catch (error) {
-    console.error("Failed to fetch company data:", error);
-    return NextResponse.json(
-      { message: "Failed to fetch company data" },
-      { status: 500 }
-    );
+    return NextResponse.json(company, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message || "Server error" }, { status: 500 });
   }
 }

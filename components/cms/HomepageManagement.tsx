@@ -377,155 +377,155 @@ export default function HomepageManagement() {
                   )}
 
                   {/* Company Section */}
-               {section.sectionId === "company" && (
-  <>
-    <label className="block text-slate-300 mb-2">会社名</label>
-    <Input
-      value={section.content?.companyInfo?.name || "有限会社 鷲津メッキ工業所"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          name: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                  {section.sectionId === "company" && (
+                    <>
+                      <label className="block text-slate-300 mb-2">会社名</label>
+                      <Input
+                        value={section.content?.companyInfo?.name || "有限会社 鷲津メッキ工業所"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            name: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">住所</label>
-    <Input
-      value={section.content?.companyInfo?.address || "静岡県湖西市新居町内山1214-2"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          address: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">住所</label>
+                      <Input
+                        value={section.content?.companyInfo?.address || "静岡県湖西市新居町内山1214-2"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            address: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">電話番号</label>
-    <Input
-      value={section.content?.companyInfo?.phone || "053-595-3456"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          phone: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">電話番号</label>
+                      <Input
+                        value={section.content?.companyInfo?.phone || "053-595-3456"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            phone: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">メール</label>
-    <Input
-      value={section.content?.companyInfo?.email || ""}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          email: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">メール</label>
+                      <Input
+                        value={section.content?.companyInfo?.email || ""}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            email: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">会社ロゴ</label>
-    <SingleImageUpload
-      value={section.content?.companyInfo?.logo || ""}
-      onChange={(url) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          logo: url,
-        })
-      }
-      folder="homepage/company"
-    />
+                      <label className="block text-slate-300 mb-2">会社ロゴ</label>
+                      <SingleImageUpload
+                        value={section.content?.companyInfo?.logo || ""}
+                        onChange={(url) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            logo: url,
+                          })
+                        }
+                        folder="homepage/company"
+                      />
 
-    <label className="block text-slate-300 mb-2">創業</label>
-    <Input
-      value={section.content?.companyInfo?.founded || "1961年12月"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          founded: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">創業</label>
+                      <Input
+                        value={section.content?.companyInfo?.founded || "1961年12月"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            founded: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">従業員</label>
-    <Input
-      value={section.content?.companyInfo?.employees || "正規 49名 / 非正規 約32名"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          employees: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">従業員</label>
+                      <Input
+                        value={section.content?.companyInfo?.employees || "正規 49名 / 非正規 約32名"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            employees: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">資本金</label>
-    <Input
-      value={section.content?.companyInfo?.capital || "500万円"}
-      onChange={(e) =>
-        handleContentChange(section.sectionId, "companyInfo", {
-          ...section.content?.companyInfo,
-          capital: e.target.value,
-        })
-      }
-      className="bg-slate-900 border-slate-600 text-white"
-    />
+                      <label className="block text-slate-300 mb-2">資本金</label>
+                      <Input
+                        value={section.content?.companyInfo?.capital || "500万円"}
+                        onChange={(e) =>
+                          handleContentChange(section.sectionId, "companyInfo", {
+                            ...section.content?.companyInfo,
+                            capital: e.target.value,
+                          })
+                        }
+                        className="bg-slate-900 border-slate-600 text-white"
+                      />
 
-    <label className="block text-slate-300 mb-2">製品</label>
-    <div className="space-y-2">
-      {(section.content?.companyInfo?.products || ["自動車金属部品メッキ", "亜鉛メッキ", "ニッケルメッキ"]).map(
-        (product, index) => (
-          <div key={index} className="flex gap-2">
-            <Input
-              value={product}
-              onChange={(e) => {
-                const newProducts = [...(section.content?.companyInfo?.products || [])];
-                newProducts[index] = e.target.value;
-                handleContentChange(section.sectionId, "companyInfo", {
-                  ...section.content?.companyInfo,
-                  products: newProducts,
-                });
-              }}
-              className="bg-slate-900 border-slate-600 text-white flex-1"
-            />
-            <button
-              type="button"
-              onClick={() => {
-                const newProducts = [...(section.content?.companyInfo?.products || [])];
-                newProducts.splice(index, 1);
-                handleContentChange(section.sectionId, "companyInfo", {
-                  ...section.content?.companyInfo,
-                  products: newProducts,
-                });
-              }}
-              className="bg-red-600 px-2 rounded text-white"
-            >
-              削除
-            </button>
-          </div>
-        )
-      )}
-      <button
-        type="button"
-        onClick={() => {
-          const newProducts = [...(section.content?.companyInfo?.products || [])];
-          newProducts.push("");
-          handleContentChange(section.sectionId, "companyInfo", {
-            ...section.content?.companyInfo,
-            products: newProducts,
-          });
-        }}
-        className="bg-blue-600 px-4 py-1 rounded text-white"
-      >
-        追加
-      </button>
-    </div>
-  </>
-)}
+                      <label className="block text-slate-300 mb-2">製品</label>
+                      <div className="space-y-2">
+                        {(section.content?.companyInfo?.products || ["自動車金属部品メッキ", "亜鉛メッキ", "ニッケルメッキ"]).map(
+                          (product, index) => (
+                            <div key={index} className="flex gap-2">
+                              <Input
+                                value={product}
+                                onChange={(e) => {
+                                  const newProducts = [...(section.content?.companyInfo?.products || [])];
+                                  newProducts[index] = e.target.value;
+                                  handleContentChange(section.sectionId, "companyInfo", {
+                                    ...section.content?.companyInfo,
+                                    products: newProducts,
+                                  });
+                                }}
+                                className="bg-slate-900 border-slate-600 text-white flex-1"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newProducts = [...(section.content?.companyInfo?.products || [])];
+                                  newProducts.splice(index, 1);
+                                  handleContentChange(section.sectionId, "companyInfo", {
+                                    ...section.content?.companyInfo,
+                                    products: newProducts,
+                                  });
+                                }}
+                                className="bg-red-600 px-2 rounded text-white"
+                              >
+                                削除
+                              </button>
+                            </div>
+                          )
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newProducts = [...(section.content?.companyInfo?.products || [])];
+                            newProducts.push("");
+                            handleContentChange(section.sectionId, "companyInfo", {
+                              ...section.content?.companyInfo,
+                              products: newProducts,
+                            });
+                          }}
+                          className="bg-blue-600 px-4 py-1 rounded text-white"
+                        >
+                          追加
+                        </button>
+                      </div>
+                    </>
+                  )}
 
 
 

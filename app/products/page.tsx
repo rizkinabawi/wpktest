@@ -145,7 +145,7 @@ export default async function SampleProductsPage() {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

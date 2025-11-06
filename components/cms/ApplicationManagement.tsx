@@ -12,6 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useApplications, useUpdateApplicationStatus } from "@/lib/hooks/useApi"
 import { format } from "date-fns"
 import { ja } from "date-fns/locale/ja"
+import useDownloadCv from "@/lib/hooks/useDownloadCv"
 
 interface Application {
   _id: string
@@ -33,6 +34,8 @@ export default function ApplicationManagement() {
   const [filter, setFilter] = useState<"all" | Application["status"]>("all")
   const { data, isLoading } = useApplications({ status: filter === "all" ? undefined : filter })
   const updateStatus = useUpdateApplicationStatus()
+
+  const { handleDownload } = useDownloadCv()
 
   const applications = (data?.items || []) as Application[]
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null)
@@ -169,8 +172,8 @@ export default function ApplicationManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {applications.map((application) => (
-                    <TableRow key={application._id} className="border-slate-800 hover:bg-slate-800/50">
+                  {applications.map((application, index: number) => (
+                    <TableRow key={application._id || index} className="border-slate-800 hover:bg-slate-800/50">
                       <TableCell className="text-slate-400">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
@@ -208,7 +211,7 @@ export default function ApplicationManagement() {
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           詳細
-                      </Button>
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -287,10 +290,13 @@ export default function ApplicationManagement() {
                   <Button
                     variant="outline"
                     className="border-slate-700 text-blue-400 hover:bg-blue-600/20 bg-transparent"
+                    onClick={() => handleDownload(`/api/download/cv/${selectedApplication._id}`,"履歴書をダウンロード")}
                   >
                     <Download className="h-4 w-4 mr-2" />
                     履歴書をダウンロード
                   </Button>
+
+
                 </div>
               )}
 
