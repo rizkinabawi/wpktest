@@ -1,11 +1,20 @@
 'use client'
 
 import { motion } from "motion/react";
+import { useHomepageSections } from "@/lib/hooks/useApi";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Award, Zap, Shield, Users } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
 export function About() {
+  const { data: sectionsData, isLoading } = useHomepageSections({ visible: true });
+
+  const aboutSection = sectionsData?.items?.find(
+    (section: any) => section.sectionId === "about"
+  );
+
+  const aboutContent = aboutSection?.content || {};
+
   const features = [
     {
       icon: Award,
@@ -29,10 +38,19 @@ export function About() {
     },
   ];
 
+  if (isLoading) {
+    return <div className="text-center text-slate-500 py-10">Loading...</div>;
+  }
+
+  if (!aboutContent) {
+    return <div className="text-center text-red-500 py-10">Tidak ada data.</div>;
+  }
+
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+          {/* Teks */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -40,31 +58,22 @@ export function About() {
             viewport={{ once: true }}
           >
             <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full mb-6">
-              鷲津メッキ工業所について
+              {aboutContent.tagline || "鷲津メッキ工業所について"}
             </span>
-            <h2 className="text-slate-900 dark:text-white mb-6">
-              テクノロジーとエコロジーの
-              <br />
-              融合を実現する
+            <h2 className="text-slate-900 dark:text-white mb-6 text-3xl font-bold leading-snug">
+              {aboutContent.title || "テクノロジーとエコロジーの融合を実現する"}
             </h2>
+
             <div className="space-y-4 text-slate-600 dark:text-slate-400">
-              <p>
-                鷲津メッキ工業所は、創業以来メッキ加工一筋で培ってきた確かな技術と豊富な経験を活かし、
-                お客様のニーズに応える高品質な表面処理サービスを提供しています。
-              </p>
-              <p>
-                私たちは、最新のテクノロジーを導入しながらも環境への配慮を忘れず、
-                持続可能な製造プロセスの確立に取り組んでいます。
-                省エネルギー設備の導入や廃液処理の徹底など、
-                エコロジーとテクノロジーの両立を目指しています。
-              </p>
-              <p>
-                お客様の製品に付加価値を提供し、品質向上に貢献することが私たちの使命です。
-                小ロットから大ロットまで、幅広いご要望に柔軟に対応いたします。
-              </p>
+              {Array.isArray(aboutContent.description)
+                ? aboutContent.description.map((text: string, index: number) => (
+                    <p key={index}>{text}</p>
+                  ))
+                : <p>{aboutContent.description}</p>}
             </div>
           </motion.div>
 
+          {/* Gambar */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -74,8 +83,8 @@ export function About() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1513828583688-c52646db42da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmR1c3RyaWFsJTIwZXF1aXBtZW50fGVufDF8fHx8MTc2MjAwMzUwOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Industrial Equipment"
+                src={aboutContent.image || "https://images.unsplash.com/photo-1513828583688-c52646db42da?crop=entropy&cs=tinysrgb&fit=max&w=1080"}
+                alt="About image"
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent" />
@@ -85,6 +94,7 @@ export function About() {
           </motion.div>
         </div>
 
+        {/* Fitur statis */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <motion.div

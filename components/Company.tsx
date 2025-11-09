@@ -31,7 +31,7 @@ export function Company() {
           transition={{ duration: 0.6 }}
           className="text-center inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full mb-6"
         >
-          会社 / KAISHA
+          会社 / COMPANY
         </motion.span>
 
         {/* Two child columns */}
