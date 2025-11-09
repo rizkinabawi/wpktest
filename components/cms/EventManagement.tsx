@@ -48,6 +48,7 @@ export default function EventManagement() {
     organizer: "",
     registrationUrl: "",
     images: [] as string[],
+    youtubeUrl: "",
     status: "予定",
     isPublic: true,
   });
@@ -65,6 +66,7 @@ export default function EventManagement() {
       organizer: event.organizer || "",
       registrationUrl: event.registrationUrl || "",
       images: event.images || [],
+      youtubeUrl: event.youtubeUrl || "",
       status: event.status,
       isPublic: event.isPublic,
     });
@@ -85,6 +87,7 @@ export default function EventManagement() {
       organizer: formData.organizer,
       registrationUrl: formData.registrationUrl,
       images: formData.images,
+      youtubeUrl: formData.youtubeUrl,
       status: formData.status,
       isPublic: formData.isPublic,
     };
@@ -118,6 +121,7 @@ export default function EventManagement() {
       organizer: "",
       registrationUrl: "",
       images: [],
+      youtubeUrl: "",
       status: "予定",
       isPublic: true,
     });
@@ -182,6 +186,13 @@ export default function EventManagement() {
                       <p className="text-slate-500 text-sm mt-1">
                         {event.eventType} | {format(new Date(event.startDate), "yyyy/MM/dd")} - {format(new Date(event.endDate), "yyyy/MM/dd")} | {event.status}
                       </p>
+                      {event.youtubeUrl && (
+                        <p className="text-blue-400 text-sm mt-1">
+                          <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                            YouTubeで見る
+                          </a>
+                        </p>
+                      )}
                     </div>
                     <div className="flex gap-2">
                       <Button
@@ -325,6 +336,17 @@ export default function EventManagement() {
             </div>
 
             <div>
+              <label className="block text-slate-300 mb-2">YouTubeリンク（任意）</label>
+              <Input
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=..."
+                value={formData.youtubeUrl}
+                onChange={(e) => setFormData({ ...formData, youtubeUrl: e.target.value })}
+                className="bg-slate-900 border-slate-600 text-white"
+              />
+            </div>
+
+            <div>
               <label className="block text-slate-300 mb-2">ステータス</label>
               <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
                 <SelectTrigger className="bg-slate-900 border-slate-600 text-white">
@@ -362,4 +384,3 @@ export default function EventManagement() {
     </div>
   );
 }
-
