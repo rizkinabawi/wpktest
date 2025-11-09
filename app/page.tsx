@@ -14,6 +14,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { useHomepageSections } from "@/lib/hooks/useApi"
 import { Loader2 } from "lucide-react"
 import SampleProduct from "@/lib/models/SampleProduct"
+import { Equipment } from "@/components/Equipment"
 
 export default function Page() {
   const { data, isLoading } = useHomepageSections()
@@ -32,10 +33,12 @@ export default function Page() {
     about: <About />,
     services: <Services />,
     technology: <Technology />,
+    equipment : <Equipment/>,
     news: <News />,
     company: <Company />,
     recruit: <Recruit />,
     contact: <Contact />,
+
   }
 
   // Section default (kalau CMS belum ada datanya)
@@ -44,6 +47,7 @@ export default function Page() {
     "about",
     "services",
     "technology",
+    "equipment",
     "news",
     "company",
     "recruit",
