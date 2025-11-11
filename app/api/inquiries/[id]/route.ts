@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return createSuccessResponse({
       id: inquiry._id,
-      date: inquiry.date,
+      date: inquiry.createdAt,
       companyName: inquiry.companyName,
       name: inquiry.name,
       email: inquiry.email,
@@ -34,6 +34,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       createdAt: inquiry.createdAt,
       updatedAt: inquiry.updatedAt,
     });
+
   } catch (error: any) {
     console.error('Get inquiry error:', error);
     return createErrorResponse('SERVER_ERROR', 'サーバーエラーが発生しました', 500);

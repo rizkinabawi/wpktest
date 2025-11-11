@@ -123,14 +123,17 @@ export default function HomepageManagement() {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {sections.map((section, index) => (
-          <Card key={section._id} className="bg-slate-800 border-slate-700">
+          <Card key={ index} className="bg-slate-800 border-slate-700">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-white capitalize">{section.sectionId}</CardTitle>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-slate-400">Visible</span>
                 <Switch
                   checked={section.isVisible}
-                  onCheckedChange={(checked) => handleSectionChange(index, { ...section, isVisible: checked })}
+                  onCheckedChange={(checked) =>
+  handleSectionChange(index, { ...section.toObject?.(), isVisible: checked } as IHomepageSection)
+}
+
                 />
               </div>
             </CardHeader>

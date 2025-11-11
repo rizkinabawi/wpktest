@@ -1,33 +1,26 @@
-// app/api/download/cv/[id]/route.ts
-import { NextResponse } from "next/server";
-import  connectToDatabase  from "@/lib/mongodb";
+import { NextRequest, NextResponse } from "next/server";
+import connectToDatabase from "@/lib/mongodb";
 import Application from "@/lib/models/Application";
 
+// Handler GET untuk download CV berdasarkan ID
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> } // ubah context menjadi Promise params
 ) {
-  const id = await params.id;
-
   try {
+    const id = (await params).id; // ambil id dari Promise
+
     await connectToDatabase();
 
     const app = await Application.findById(id).lean();
 
     if (!app || !app.resumeUrl) {
-      return NextResponse.json(
-        { error: "ファイルが見つかりません。" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "CV not found" }, { status: 404 });
     }
 
-    // Redirect langsung ke Cloudinary file URL
     return NextResponse.redirect(app.resumeUrl);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Download error:", error);
-    return NextResponse.json(
-      { error: "サーバーエラーが発生しました。" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

@@ -1,5 +1,5 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import {Navigation} from "@/components/Navigation";
+import {Footer} from "@/components/Footer";
 import { Wrench } from "lucide-react";
 import Image from "next/image";
 

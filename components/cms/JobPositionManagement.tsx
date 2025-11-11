@@ -43,19 +43,32 @@ export default function JobPositionManagement() {
   
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingPosition, setEditingPosition] = useState<JobPosition | null>(null)
-  const [formData, setFormData] = useState({
-    title: "",
-    department: "",
-    location: "東京都",
-    employmentType: "正社員" as const,
-    salary: "",
-    description: "",
-    requirements: "",
-    responsibilities: "",
-    benefits: "",
-    status: "公開" as const,
-    applicationDeadline: "",
-  })
+ const [formData, setFormData] = useState<{
+  title: string
+  department: string
+  location: string
+  employmentType: '正社員' | '契約社員' | 'パート・アルバイト' | '派遣社員'
+  salary: string
+  description: string
+  requirements: string
+  responsibilities: string
+  benefits: string
+  status: '公開' | '非公開' | '募集終了'
+  applicationDeadline: string
+}>({
+  title: "",
+  department: "",
+  location: "東京都",
+  employmentType: "正社員",
+  salary: "",
+  description: "",
+  requirements: "",
+  responsibilities: "",
+  benefits: "",
+  status: "公開",
+  applicationDeadline: "",
+})
+
 
   const handleCreate = () => {
     setEditingPosition(null)

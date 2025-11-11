@@ -1,5 +1,6 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Model, models } from 'mongoose';
 
+// Interface untuk TypeScript
 export interface IEvent extends Document {
   title: string;
   titleEn: string;
@@ -11,7 +12,7 @@ export interface IEvent extends Document {
   organizer?: string;
   registrationUrl?: string;
   images: string[];
-  youtubeUrl?: string;  // tambah ini
+  youtubeUrl?: string; // tambah ini
   status: '予定' | '開催中' | '終了' | 'キャンセル';
   isPublic: boolean;
   createdAt: Date;
@@ -34,7 +35,7 @@ const EventSchema = new Schema<IEvent>(
     organizer: { type: String },
     registrationUrl: { type: String },
     images: { type: [String], default: [] },
-    youtubeUrl: { type: String },  // tambahkan field ini
+    youtubeUrl: { type: String }, // tambahkan field ini
     status: {
       type: String,
       enum: ['予定', '開催中', '終了', 'キャンセル'],
@@ -45,8 +46,12 @@ const EventSchema = new Schema<IEvent>(
   { timestamps: true }
 );
 
+// Index untuk query cepat
 EventSchema.index({ startDate: -1 });
 EventSchema.index({ status: 1 });
 EventSchema.index({ isPublic: 1 });
 
-export default mongoose.models.Event || mongoose.model<IEvent>('Event', EventSchema);
+// Standardized export: reuse model jika sudah ada
+const Event: Model<IEvent> = models.Event || mongoose.model<IEvent>('Event', EventSchema);
+
+export default /** @type {import("mongoose").Model<import("mongoose").Document>} */ (Event);

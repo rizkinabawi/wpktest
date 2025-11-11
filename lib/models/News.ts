@@ -57,5 +57,5 @@ NewsSchema.index({ category: 1 });
 
 const News: Model<INews> = mongoose.models.News || mongoose.model<INews>('News', NewsSchema);
 
-export default News;
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (News)
 

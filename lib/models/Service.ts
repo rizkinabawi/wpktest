@@ -47,5 +47,5 @@ const ServiceSchema = new Schema<IService>(
 
 const Service: Model<IService> = mongoose.models.Service || mongoose.model<IService>('Service', ServiceSchema);
 
-export default Service;
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (Service)
 

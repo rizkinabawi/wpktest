@@ -28,7 +28,7 @@ export default function Page() {
   }
 
   // Mapping antara sectionId dan komponen yang akan ditampilkan
-  const sectionMap: Record<string, JSX.Element> = {
+  const sectionMap: Record<string, React.ReactNode> = {
     hero: <Hero />,
     about: <About />,
     services: <Services />,

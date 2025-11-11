@@ -86,6 +86,4 @@ ApplicationSchema.index({ status: 1, createdAt: -1 });
 
 const Application: Model<IApplication> =
   mongoose.models.Application || mongoose.model<IApplication>('Application', ApplicationSchema);
-
-export default Application;
-
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (Application)

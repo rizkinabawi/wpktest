@@ -19,4 +19,4 @@ const CompanySchema = new Schema({
 }, { timestamps: true });
 
 const Company = models.Company || model("Company", CompanySchema);
-export default Company;
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (Company)

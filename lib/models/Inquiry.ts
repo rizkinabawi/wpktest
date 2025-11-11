@@ -60,5 +60,4 @@ InquirySchema.index({ status: 1, createdAt: -1 });
 
 const Inquiry: Model<IInquiry> = mongoose.models.Inquiry || mongoose.model<IInquiry>('Inquiry', InquirySchema);
 
-export default Inquiry;
-
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (Inquiry)

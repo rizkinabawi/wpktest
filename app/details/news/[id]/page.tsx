@@ -6,11 +6,11 @@ import Image from "next/image";
 import { Newspaper } from "lucide-react";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>; // pakai Promise supaya build Next 15 aman
 };
 
 export default async function NewsDetailPage({ params }: Props) {
-  const { id } = params;
+  const { id } = await params; // resolve promise dulu
 
   await dbConnect();
   const news = await News.findById(id).lean();
@@ -66,7 +66,7 @@ export default async function NewsDetailPage({ params }: Props) {
             {new Date(news.updatedAt).toLocaleString("ja-JP")}
           </div>
 
-          {/* Optional image (if someday you add image field) */}
+          {/* Optional image */}
           {/* <div className="relative w-full h-80 rounded-xl overflow-hidden mt-12">
             <Image
               src="/example.jpg"

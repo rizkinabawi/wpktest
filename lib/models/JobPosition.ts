@@ -79,5 +79,5 @@ JobPositionSchema.index({ status: 1, createdAt: -1 });
 const JobPosition: Model<IJobPosition> =
   mongoose.models.JobPosition || mongoose.model<IJobPosition>('JobPosition', JobPositionSchema);
 
-export default JobPosition;
+export default /** @type {import("mongoose").Model<import("mongoose").Document>}*/ (JobPosition)
 
