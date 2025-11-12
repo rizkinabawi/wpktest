@@ -85,7 +85,7 @@ export default function ApplicationManagement() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-8 ">
       <div className="mb-8">
         <h1 className="text-white text-3xl mb-2">採用応募管理</h1>
         <p className="text-slate-400">求職者からの応募を確認・管理</p>

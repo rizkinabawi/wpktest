@@ -159,8 +159,8 @@ export default function InquiryManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {inquiries.map((inquiry) => (
-                    <TableRow key={inquiry._id} className="border-slate-800 hover:bg-slate-800/50">
+                  {inquiries.map((inquiry,index:number) => (
+                    <TableRow key={index} className="border-slate-800 hover:bg-slate-800/50">
                       <TableCell className="text-slate-400">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
